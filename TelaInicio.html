@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+      integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z"
+      crossorigin="anonymous"
+    />
+    <style>
+        body{
+             width: 100%;
+        height: 10rem;
+        background:orange;
+        color: rgba(0, 0, 0, 0.815);
+        font-weight: 500;
+        display: flex;
+        min-height: 100vh;
+        min-width: 100vw;
+    }
+      .table {
+        width: 100%;
+        margin-bottom: 1rem;
+        color: #212529;
+      }
+
+      .table th,
+      .table td {
+        padding: 0.75rem;
+        vertical-align: top;
+        border-top: 1px solid #dee2e6;
+      }
+
+      .table thead th {
+        vertical-align: bottom;
+        border-bottom: 2px solid #dee2e6;
+      }
+
+      .table tbody + tbody {
+        border-top: 2px solid #dee2e6;
+      }
+
+      .table .table {
+        background-color: #fff;
+      }
+
+      .table-dark {
+        color: #fff;
+        background-color: #212529;
+      }
+
+      .table-dark th,
+      .table-dark td,
+      .table-dark thead th {
+        border-color: #32383e;
+      }
+
+      .table-dark.table-bordered {
+        border: 0;
+      }
+
+      .table-dark.table-striped tbody tr:nth-of-type(odd) {
+        background-color: rgba(255, 255, 255, 0.05);
+      }
+
+      .table-dark.table-hover tbody tr:hover {
+        background-color: rgba(255, 255, 255, 0.075);
+      }
+    </style>
+  </head>
+  <body>
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">NomeDoCliente</th>
+          <th scope="col">Telefone</th>
+          <th scope="col">CPF</th>
+          <th scope="col">Email</th>
+          <th scope="col">Ação</th>
+          <th scope="col">Acontecimento</th>
+          <th scope="col">Opcoes</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tfoot>
+            <tr>
+              <td><input type="text" class="form-control" id="nome-input" /></td>
+              <td><input type="tel" class="form-control" id="tel-input" /></td>
+              <td><input type="text" class="form-control" id="CPF-input" /></td>
+              <td><input type="email" class="form-control" id="email-input" /></td>
+              <td><input type="text" class="form-control" id="acao-input" /></td>
+              <td><input type="text" class="form-control" id="acontecimento-input" /></td>
+              <td>
+                <button class="btn btn-success" id="add-button">Adicionar</button>
+              </td>
+            </tr>
+          </tfoot>
+      </tbody>
+    </table>
+    <script>
+const removeButtons = document.querySelectorAll('.remove-button');
+const addButton = document.querySelector('#add-button');
+const nomeInput = document.querySelector('#nome-input');
+const telInput = document.querySelector('#tel-input');
+const CPFInput = document.querySelector('#CPF-input');
+const emailInput = document.querySelector('#email-input');
+const acaoInput = document.querySelector('#acao-input');
+const acontecimentoInput = document.querySelector('#acontecimento-input');
+
+
+removeButtons.forEach(button => {
+  button.addEventListener('click', event => {
+    const row = event.target.parentNode.parentNode;
+    row.parentNode.removeChild(row);
+  });
+});
+
+addButton.addEventListener('click', event => {
+  const nome = nomeInput.value;
+  const tel = telInput.value;
+  const CPF = CPFInput.value;
+  const email = emailInput.value;
+  const acao =  acaoInput.value;
+  const acontecimento = acontecimentoInput.value;
+
+  const table = document.querySelector('table');
+  const newRow = document.createElement('tr');
+  newRow.innerHTML = `
+    <td>${nome}</td>
+    <td>${tel}</td>
+    <td>${CPF}</td>
+    <td>${email}</td>
+    <td>${acao}</td>
+    <td>${acontecimento}</td>
+    <td><button class="btn btn-danger remove-button">Remover</button></td>
+  `;
+  table.tBodies[0].insertBefore(newRow, table.tBodies[0].rows[3]);  // adiciona a nova linha antes da terceira linha da tbody (a última linha)
+
+  nomeInput.value = '';  // limpa os campos de entrada
+  telInput.value = '';
+  CPFInput.value = '';
+  emailInput.value = '';
+  acaoInput.value = '';
+  acontecimentoInput.value = '';
+
+  const newRemoveButton = newRow.querySelector('.remove-button');
+  newRemoveButton.addEventListener('click', event => {
+    const row = event.target.parentNode.parentNode;
+    row.parentNode.removeChild(row);
+  });
+});
+    </script>
+  </body>
+</html>
